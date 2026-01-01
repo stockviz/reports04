@@ -1,0 +1,88 @@
+---
+params:
+  asof: ""
+title: Daily Media Digest
+editor_options:
+  chunk_output_type: console
+output: 
+  html_document:
+    theme: flatly
+    highlight: tango
+    self_contained: false
+    lib_dir: daily/rmdlib
+    toc: true
+    toc_depth: 2
+    includes:
+        in_header: ../header.html
+        after_body: ../footer.html
+---
+
+```{r, init_chunk, echo = FALSE, message = FALSE, warning = FALSE}
+library('RODBC')
+library('DBI')
+library('RSQLite')
+library('jsonlite')
+library('tidyverse')
+
+options(stringsAsFactors = FALSE)
+options("scipen"=100)
+
+asof <- as.Date(params$asof)
+if(is.na(asof)){
+  asof <- Sys.Date()
+}
+
+mediaDbName <- "/mnt/icelandD/recoll/MEDIA.db"
+eqLocLocal <- "../../reports02/eq-in/risk"
+eqLocRemote <- "https://stockviz.github.io/reports02/eq-in/risk"
+
+mydb <- dbConnect(RSQLite::SQLite(), dbname = mediaDbName, flags = RSQLite::SQLITE_RO)
+aiSummaries <- dbGetQuery(mydb, "SELECT * FROM META WHERE UPLOAD_DT = $1 and SUMMARY is not NULL order by TS desc", 
+                          params=list(strftime(asof, "%Y%m%d")))
+dbDisconnect(mydb)
+
+```
+
+---
+subtitle: `r asof`
+---
+
+```{r, ai_summary_chunk, echo = FALSE, results='asis', message = FALSE, warning = FALSE, fig.height=12, fig.width=12}
+if(nrow(aiSummaries) == 0) q()
+
+for(i in 1:nrow(aiSummaries)){
+  cat("## ", aiSummaries$TITLE[i], "\n\n")
+  
+  syms <- jsonlite::fromJSON(aiSummaries$SYMBOLS[i])
+  
+  if(length(syms) > 0){
+    for(j in 1:length(syms)){
+      if(length(syms[j]) == 0) next
+      
+      symName <- gsub("[^[:alnum:] ]| ", "", syms[j])
+      if(length(symName) == 0) next
+      
+      if(file.exists(paste0(eqLocLocal, "/in.", symName, ".html"))){
+        link <- paste0(eqLocRemote, "/in.", symName, ".html")
+        cat(paste0("[", syms[j], "](", link, ") "))
+      } else {
+        cat("`", syms[j], "` ")
+      }
+      
+    }
+    cat("\n\n")
+  }
+  
+  cat(aiSummaries$SUMMARY[i])
+  cat("\n\n")
+  cat(paste0("*", 
+             aiSummaries$SRC[i], ": ",
+             "https://youtu.be/", aiSummaries$ID[i], " ",
+             strftime(as.POSIXct(aiSummaries$TS[i]), '%H:%M'), " ",
+             "(", aiSummaries$DURATION[i], "s) ",
+              "*"))
+  
+  cat("\n\n\n\n")
+}
+
+```
