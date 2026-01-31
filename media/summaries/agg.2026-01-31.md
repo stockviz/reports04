@@ -1,4 +1,4 @@
-Here’s a structured breakdown of the key insights from the three segments you shared, along with potential implications and trends:
+## Weekly Summary
 
 ---
 
@@ -151,4 +151,4 @@ Here’s a structured breakdown of the key insights from the three segments you 
 - **Hyderabad and data centers** are emerging growth themes, driven by GCC demand and ESG compliance.
 - **ESG and GCC tenants** are becoming critical differentiators for institutional landlords.
 
-Would you like a deeper dive into any specific aspect (e.g., valuation models for NSE, GCC demand trends, or REIT comparisons)?
+
