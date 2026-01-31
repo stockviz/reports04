@@ -2,45 +2,7 @@
 
 ---
 
-### **1. Corporate Earnings Call: [Company Name] (2026-Jan-29)**
-**Key Highlights:**
-- **Revenue Growth & Margins:**
-  - **Revenue up 12% YoY** (specifics not provided in snippet, but implied growth).
-  - **EBITDA margin expansion** (not explicitly stated but inferred from operational improvements).
-  - **Dividend payout increased 6% sequentially** (flat QoQ but +10% YoY), signaling confidence in cash flow.
-
-- **Operational Strengths:**
-  - **Occupancy up 4% YoY** (95.3% excluding acquisitions), indicating strong demand.
-  - **Releasing spread of 27%** (premium on new leases vs. departing tenants), a key driver of rental growth.
-  - **Hyderabad market dynamics**: Rents crossed **₹100/sq.ft/month** (recent deal at ₹105), reflecting supply constraints and demand.
-
-- **Financial Health:**
-  - **Borrowing costs dropped from 8.15% to 7.39%** (100 bps decline), improving net debt metrics.
-  - **Potential for further rating upgrades** (if borrowing costs stabilize or NAV improves).
-  - **NAV tailwinds**: Cap rate compression (+ rental growth) expected to boost valuations.
-
-- **Outlook for FY27:**
-  - **Guidance not provided**, but focus on:
-    - **Sustained occupancy** (targeting 95%+).
-    - **Rental growth** (driven by Hyderabad and GCC demand).
-    - **ESG compliance** (critical for retaining GCC clients, who prefer institutional landlords).
-  - **Data centers as a growth driver**: 4,000 crore capex pipeline, with 100 acres in Hyderabad/Mumbai underutilized (FSI of 2.9 vs. potential 7.1).
-
-- **Market Positioning:**
-  - **Best-performing REIT since listing** (16.6% return vs. peers), attributed to:
-    - Diversified portfolio (4 cities).
-    - Lower volatility vs. listed developers.
-    - Resilience during COVID/WFH/rate hikes.
-
-**Implications:**
-- **Sector Tailwinds**: IT/ITeS and GCC demand remain sticky, with GCC offering longer leases and lower cyclicality.
-- **Hyderabad as a Growth Engine**: Rising rents and limited supply could drive further NAV appreciation.
-- **ESG as a Differentiator**: Institutional landlords with ESG credentials are favored by GCC clients.
-- **Capex Focus**: Data centers and underutilized land (via higher FSI) could unlock value.
-
----
-
-### **2. NSE IPO Update (2026-Jan-29)**
+### **1. NSE IPO Update (2026-Jan-29)**
 **Key Highlights:**
 - **Milestone Achieved**: Received **in-principle NOC** (No Objection Certificate) after a decade-long process (since 2016).
 - **Valuation Context**:
@@ -66,7 +28,7 @@
 
 ---
 
-### **3. Mindspace Business Parks (REIT) Earnings (2026-Jan-29)**
+### **2. Mindspace Business Parks (REIT) Earnings (2026-Jan-29)**
 **Key Highlights:**
 - **Performance Metrics**:
   - **Occupancy**: 95.3% (excluding acquisitions), up 4% YoY.
@@ -141,8 +103,7 @@
 1. **Global/India Economic Slowdown**: Could impact IT/ITeS demand and GCC spending.
 2. **Interest Rate Volatility**: Further hikes may pressure REITs and NSE’s cost structure.
 3. **Regulatory Changes**: SEBI/RBI policies on REITs, ESG, or exchange listings.
-4. **Competition**: BSE’s potential IPO or other exchanges diluting NSE’s dominance.
-5. **Supply Constraints**: Hyderabad’s real estate growth depends on limited land availability.
+4. **Supply Constraints**: Hyderabad’s real estate growth depends on limited land availability.
 
 ---
 ### **Final Takeaways**
