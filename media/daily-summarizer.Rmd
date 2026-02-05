@@ -23,6 +23,7 @@ library('DBI')
 library('RSQLite')
 library('jsonlite')
 library('tidyverse')
+library('httr2')
 
 options(stringsAsFactors = FALSE)
 options("scipen"=100)
@@ -33,13 +34,53 @@ if(is.na(asof)){
 }
 
 mediaDbName <- "/mnt/icelandD/recoll/MEDIA.db"
+newsDbName <- "/mnt/icelandD/recoll/NEWS.db"
+
 eqLocLocal <- "../../reports02/eq-in/risk"
 eqLocRemote <- "https://stockviz.github.io/reports02/eq-in/risk"
 
 mydb <- dbConnect(RSQLite::SQLite(), dbname = mediaDbName, flags = RSQLite::SQLITE_RO)
-aiSummaries <- dbGetQuery(mydb, "SELECT * FROM META WHERE UPLOAD_DT = $1 and SUMMARY is not NULL order by TS desc", 
+aiSummaries1 <- dbGetQuery(mydb, "SELECT * FROM META WHERE UPLOAD_DT = $1 and SUMMARY is not NULL order by TS desc", 
                           params=list(strftime(asof, "%Y%m%d")))
 dbDisconnect(mydb)
+
+mydb <- dbConnect(RSQLite::SQLite(), dbname = newsDbName, flags = RSQLite::SQLITE_RO)
+aiSummaries2 <- dbGetQuery(mydb, "SELECT * FROM ARTICLES WHERE PUB_DT = $1 and SUMMARY is not NULL 
+                           and TAGS is not NULL 
+                           order by PUB_TS desc", 
+                          params=list(strftime(asof, "%Y%m%d")))
+dbDisconnect(mydb)
+
+aiSummaries <- tibble()
+
+for(i in 1:nrow(aiSummaries1)){
+  aiSummaries <- rbind(aiSummaries, c(
+    aiSummaries1$TITLE[i],
+    aiSummaries1$SYMBOLS[i],
+    aiSummaries1$SUMMARY[i],
+    aiSummaries1$SRC[i],
+    paste0("https://youtu.be/", aiSummaries1$ID[i]),
+    aiSummaries1$TS[i],
+    aiSummaries1$DURATION[i]
+  ))
+}
+
+for(i in 1:nrow(aiSummaries2)){
+  aiSummaries <- rbind(aiSummaries, c(
+    aiSummaries2$TITLE[i],
+    aiSummaries2$SYMBOLS[i],
+    aiSummaries2$SUMMARY[i],
+    NA,
+    aiSummaries2$URL[i],
+    aiSummaries1$TS[i],
+    NA
+  ))
+}
+
+colnames(aiSummaries) <- c("TITLE", "SYMBOLS", "SUMMARY", "SRC", "LINK", "TS", "DURATION")
+
+aiSummaries$TS <- as.numeric(aiSummaries$TS)
+aiSummaries <- aiSummaries |> arrange(desc(TS))
 
 ```
 
@@ -75,12 +116,21 @@ for(i in 1:nrow(aiSummaries)){
   
   cat(aiSummaries$SUMMARY[i])
   cat("\n\n")
-  cat(paste0("*", 
+  if(!is.na(aiSummaries$SRC[i])){
+    cat(paste0("*", 
              aiSummaries$SRC[i], ": ",
              "https://youtu.be/", aiSummaries$ID[i], " ",
              strftime(as.POSIXct(aiSummaries$TS[i]), '%H:%M'), " ",
              "(", aiSummaries$DURATION[i], "s) ",
               "*"))
+  } else {
+    artSrc <- str_remove(url_parse(aiSummaries$LINK[i])$hostname, "www.")
+    cat(paste0("*[", 
+             artSrc, "](",
+             aiSummaries$LINK[i], ") ",
+             strftime(as.POSIXct(aiSummaries$TS[i]), '%H:%M'),
+              "*"))  
+  }
   
   cat("\n\n\n\n")
 }
