@@ -119,7 +119,7 @@ for(i in 1:nrow(aiSummaries)){
   if(!is.na(aiSummaries$SRC[i])){
     cat(paste0("*", 
              aiSummaries$SRC[i], ": ",
-             aiSummaries$LINK[i],
+             aiSummaries$LINK[i], " ",
              strftime(as.POSIXct(aiSummaries$TS[i]), '%H:%M'), " ",
              "(", aiSummaries$DURATION[i], "s) ",
               "*"))
