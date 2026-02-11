@@ -57,30 +57,32 @@ dbDisconnect(mydb)
 
 aiSummaries <- tibble()
 
-for(i in 1:nrow(aiSummaries1)){
-  aiSummaries <- rbind(aiSummaries, c(
-    aiSummaries1$TITLE[i],
-    aiSummaries1$SYMBOLS[i],
-    aiSummaries1$SUMMARY[i],
-    aiSummaries1$SRC[i],
-    paste0("https://youtu.be/", aiSummaries1$ID[i]),
-    aiSummaries1$TS[i],
-    aiSummaries1$DURATION[i]
-  ))
+if(nrow(aiSummaries1) > 0){
+  for(i in 1:nrow(aiSummaries1)){
+    aiSummaries <- rbind(aiSummaries, c(
+      aiSummaries1$TITLE[i],
+      aiSummaries1$SYMBOLS[i],
+      aiSummaries1$SUMMARY[i],
+      aiSummaries1$SRC[i],
+      paste0("https://youtu.be/", aiSummaries1$ID[i]),
+      aiSummaries1$TS[i],
+      aiSummaries1$DURATION[i]
+    ))
+  }
 }
-
-for(i in 1:nrow(aiSummaries2)){
-  aiSummaries <- rbind(aiSummaries, c(
-    aiSummaries2$TITLE[i],
-    aiSummaries2$SYMBOLS[i],
-    aiSummaries2$SUMMARY[i],
-    NA,
-    aiSummaries2$URL[i],
-    aiSummaries1$TS[i],
-    NA
-  ))
+if(nrow(aiSummaries2) > 0){
+  for(i in 1:nrow(aiSummaries2)){
+    aiSummaries <- rbind(aiSummaries, c(
+      aiSummaries2$TITLE[i],
+      aiSummaries2$SYMBOLS[i],
+      aiSummaries2$SUMMARY[i],
+      NA,
+      aiSummaries2$URL[i],
+      aiSummaries1$TS[i],
+      NA
+    ))
+  }
 }
-
 colnames(aiSummaries) <- c("TITLE", "SYMBOLS", "SUMMARY", "SRC", "LINK", "TS", "DURATION")
 
 aiSummaries$TS <- as.numeric(aiSummaries$TS)
