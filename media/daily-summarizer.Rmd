@@ -40,7 +40,9 @@ eqLocLocal <- "../../reports02/eq-in/risk"
 eqLocRemote <- "https://stockviz.github.io/reports02/eq-in/risk"
 
 mydb <- dbConnect(RSQLite::SQLite(), dbname = mediaDbName, flags = RSQLite::SQLITE_RO)
-aiSummaries1 <- dbGetQuery(mydb, "SELECT * FROM META WHERE UPLOAD_DT = $1 and SUMMARY is not NULL order by TS desc", 
+aiSummaries1 <- dbGetQuery(mydb, "SELECT * FROM META WHERE UPLOAD_DT = $1 and SUMMARY is not NULL 
+                           and SYMBOLS is not NULL 
+                           order by TS desc", 
                           params=list(strftime(asof, "%Y%m%d")))
 dbDisconnect(mydb)
 
