@@ -1,0 +1,146 @@
+---
+title: Kalshi Bitcoin Analytics
+editor_options:
+  chunk_output_type: console
+output: 
+  html_document:
+    theme: flatly
+    highlight: tango
+    self_contained: false
+    lib_dir: rmdlib
+    toc: true
+    toc_depth: 2
+    includes:
+        in_header: ../header.html
+        after_body: ../footer.html
+---
+
+
+```{r, init_chunk, echo = FALSE, message = FALSE, warning = FALSE}
+library('RPostgres')
+library('quantmod')
+library('tidyverse')
+library('jsonlite')
+library('gtExtras')
+
+options("scipen" = 100)
+options(stringsAsFactors = FALSE)
+
+
+#source("/mnt/hollandC/StockViz/R/config.r")
+#eventPath <- "/mnt/ssd1/stockviz/temp"
+
+source("/mnt/hollandr/config.r")
+eventPath <- "/srv/alerts/state"
+
+
+pgCon <- dbConnect(
+  RPostgres::Postgres(),
+  host = 'sweden',
+  user = ldbuser2,
+  password = ldbpassword2,
+  dbname = 'StockVizDyn',
+  sslmode = 'allow'
+)
+
+eventsObj <- jsonlite::read_json(sprintf("%s/btc_events.json", eventPath))
+eventsTb <- tibble()
+for(i in 1:length(eventsObj)){
+  eventsTb <- rbind(eventsTb, eventsObj[[i]])
+}
+
+today <- Sys.Date()
+now <- as.POSIXct(Sys.time(), tz = "UTC")
+startDate <- today - 500
+startCt <- as.numeric(as.POSIXct(startDate))
+
+
+pxDt <- dbGetQuery(pgCon, "select close_time, px_close
+                     from binance_crypto_historical_1h 
+                     where symbol = $1 and close_time >= $2",
+                   params = list('BTCUSDT', startCt))
+pXts <- xts(pxDt[,-1], as.POSIXct(pxDt[,1]/1000))
+
+lastPx <- as.numeric(xts::last(pXts))
+
+retHourlyXts <- na.omit(1 - stats::lag(pXts, -1)/pXts)
+hourlyStdDev20 <- sd(tail(retHourlyXts, 20))
+hourlyStdDev50 <- sd(tail(retHourlyXts, 50))
+hourlyStdDev100 <- sd(tail(retHourlyXts, 100))
+hourlyStdDev200 <- sd(tail(retHourlyXts, 200))
+hourlyStdDev <- mean(hourlyStdDev20, hourlyStdDev50, hourlyStdDev100, hourlyStdDev200)
+hourlyMean <- mean(tail(retHourlyXts, 500))
+
+dXts <- to.period(pXts, period='days', OHLC = FALSE)
+retDailyXts <- dailyReturn(dXts)
+dailyStdDev20 <- sd(tail(retDailyXts, 20))
+dailyStdDev50 <- sd(tail(retDailyXts, 50))
+dailyStdDev100 <- sd(tail(retDailyXts, 100))
+dailyStdDev200 <- sd(tail(retDailyXts, 200))
+dailyStdDev <- mean(dailyStdDev20, dailyStdDev50, dailyStdDev100, dailyStdDev200)
+dailyMean <- mean(tail(retDailyXts, 500))
+
+eventsTb$prob_higher <- NA
+for(i in 1:nrow(eventsTb)){
+  ticker <- eventsTb$ticker[i]
+  dt <- as.POSIXct(eventsTb$close_time[i], format = "%Y-%m-%dT%H:%M:%SZ", tz = "UTC")
+  px <- eventsTb$floor_strike[i]
+  
+  numDays <- as.numeric(dt - now, units = "days")
+  numHours <- as.numeric(dt - now, units = "hours")
+  prob_above_target <- NA
+  if(numDays >= 5){
+    #use daily metrics
+    future_log_price_mean <- log(lastPx) + (dailyMean - (dailyStdDev^2) / 2) * numDays
+    future_log_price_sd <- dailyStdDev * sqrt(numDays)
+    z_score <- (log(px) - future_log_price_mean) / future_log_price_sd
+    prob_above_target <- 1 - pnorm(z_score)
+  } else {
+    #use hourly metrics
+    future_log_price_mean <- log(lastPx) + (hourlyMean - (hourlyStdDev^2) / 2) * numHours
+    future_log_price_sd <- hourlyStdDev * sqrt(numHours)
+    z_score <- (log(px) - future_log_price_mean) / future_log_price_sd
+    prob_above_target <- 1 - pnorm(z_score)
+  }
+  
+  eventsTb$prob_higher[i] <- prob_above_target
+}
+
+seriesTickers <- unique(eventsTb$series_ticker)
+
+toPrint <- eventsTb |> mutate(displayTitle = md(paste0(gsub(' by ', '\n\nby ', gsub(' on ', '\n\non ', title)), '\n\n', "<sup>*", ticker, "*</sup>")),
+                  STRIKE = as.numeric(floor_strike),
+                  YES_PX = as.numeric(yes_px),
+                  STAT_PROB_HIGHER = round(as.numeric(prob_higher)*100, 2),) |>
+           select(-c(ticker, title, prob_higher, floor_strike, yes_px, close_time)) 
+
+
+```
+
+```{r, print_chunk, echo = FALSE, results='asis', message = FALSE, warning = FALSE}
+
+cat(paste("*updated:", strftime(Sys.time(), "%Y-%d-%m %H:%M"), "*\n\n"))
+
+for(i in 1:length(seriesTickers)){
+  seriesTitle <- (toPrint |> filter(series_ticker == seriesTickers[i]) |> select(series_title))[1, 1]
+  tpSlice <- toPrint |> filter(series_ticker == seriesTickers[i]) |>
+    select(-c(series_ticker, series_title)) |>
+    arrange(desc(STAT_PROB_HIGHER)) |>
+    filter(is.finite(STAT_PROB_HIGHER))
+  
+  if(nrow(tpSlice) == 0) next
+    
+  cat(paste("##", seriesTitle, "\n"))
+  
+  gtTable <- tpSlice |> 
+      gt() %>%
+      tab_header(title = seriesTitle, subtitle = seriesTickers[i]) %>%
+      fmt_number(decimals=2) %>%
+      fmt_markdown(columns = displayTitle) %>%
+      cols_label(displayTitle = '', STAT_PROB_HIGHER = 'PROBABILITY_HIGHER') %>%
+      opt_stylize(style=5)
+  
+  cat(as_raw_html(gtTable))
+}
+
+```
