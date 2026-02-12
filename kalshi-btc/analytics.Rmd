@@ -130,7 +130,7 @@ for(i in 1:length(seriesTickers)){
   
   if(nrow(tpSlice) == 0) next
     
-  cat(paste("##", seriesTitle, "\n"))
+  cat(paste("\n\n##", seriesTitle, "\n"))
   
   gtTable <- tpSlice |> 
       gt() %>%
