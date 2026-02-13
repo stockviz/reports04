@@ -119,7 +119,7 @@ toPrint <- eventsTb |> mutate(displayTitle = md(paste0(gsub(' by ', '\n\nby ', g
 
 ```{r, print_chunk, echo = FALSE, results='asis', message = FALSE, warning = FALSE}
 
-cat(paste("*updated:", strftime(Sys.time(), "%Y-%d-%m %H:%M"), "*\n\n"))
+cat(paste("*updated:", strftime(Sys.time(), "%Y-%m-%d %H:%M"), "*\n\n"))
 
 for(i in 1:length(seriesTickers)){
   seriesTitle <- (toPrint |> filter(series_ticker == seriesTickers[i]) |> select(series_title))[1, 1]
