@@ -123,11 +123,13 @@ for(i in 1:nrow(aiSummaries)){
   
   cat(aiSummaries$SUMMARY[i])
   cat("\n\n")
+  pubTimeStr <- strftime(as.POSIXct(aiSummaries$TS[i]), '%H:%M')
+  
   if(!is.na(aiSummaries$SRC[i])){
     cat(paste0("*", 
              aiSummaries$SRC[i], ": ",
              aiSummaries$LINK[i], " ",
-             strftime(as.POSIXct(aiSummaries$TS[i]), '%H:%M'), " ",
+             ifelse(is.na(pubTimeStr), "", pubTimeStr), " ",
              "(", aiSummaries$DURATION[i], "s) ",
               "*"))
   } else {
@@ -135,7 +137,7 @@ for(i in 1:nrow(aiSummaries)){
     cat(paste0("*[", 
              artSrc, "](",
              aiSummaries$LINK[i], ") ",
-             strftime(as.POSIXct(aiSummaries$TS[i]), '%H:%M'),
+             ifelse(is.na(pubTimeStr), "", pubTimeStr),
               "*"))  
   }
   
