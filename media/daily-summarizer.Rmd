@@ -42,8 +42,8 @@ eqLocRemote <- "https://stockviz.github.io/reports02/eq-in/risk"
 mydb <- dbConnect(RSQLite::SQLite(), dbname = mediaDbName, flags = RSQLite::SQLITE_RO)
 aiSummaries1 <- dbGetQuery(mydb, "SELECT * FROM META WHERE UPLOAD_DT = $1 
                            and SUMMARY is not NULL 
-                           and TITLE not LIKE '%startup%' 
-                           and SUMMARY not LIKE '%startup%'
+                           and TITLE not LIKE '%startup%' and TITLE not LIKE '%start-up%' and TITLE not LIKE '%start up%' 
+                           and SUMMARY not LIKE '%startup%' and SUMMARY not LIKE '%start-up%' and SUMMARY not LIKE '%start up%'
                            order by TS desc", 
                           params=list(strftime(asof, "%Y%m%d")))
 dbDisconnect(mydb)
@@ -51,6 +51,8 @@ dbDisconnect(mydb)
 mydb <- dbConnect(RSQLite::SQLite(), dbname = newsDbName, flags = RSQLite::SQLITE_RO)
 aiSummaries2 <- dbGetQuery(mydb, "SELECT * FROM ARTICLES WHERE PUB_DT = $1 
                            and SUMMARY is not NULL 
+                           and TITLE not LIKE '%startup%' and TITLE not LIKE '%start-up%' and TITLE not LIKE '%start up%' 
+                           and SUMMARY not LIKE '%startup%' and SUMMARY not LIKE '%start-up%' and SUMMARY not LIKE '%start up%'
                            and TAGS is not NULL 
                            order by PUB_TS desc", 
                           params=list(strftime(asof, "%Y%m%d")))
