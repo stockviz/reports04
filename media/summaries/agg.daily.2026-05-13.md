@@ -1,0 +1,1 @@
+However, I don't see any text to remove the disclaimers from. Please paste the text and I'll assist you with the task.
