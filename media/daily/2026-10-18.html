@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Daily Media Digest</title>
+
+<script src="rmdlib/header-attrs-2.30/header-attrs.js"></script>
+<script src="rmdlib/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="rmdlib/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="rmdlib/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="rmdlib/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="rmdlib/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="rmdlib/navigation-1.1/tabsets.js"></script>
+<link href="rmdlib/font-awesome-6.4.0/css/all.min.css" rel="stylesheet" />
+<link href="rmdlib/font-awesome-6.4.0/css/v4-shims.min.css" rel="stylesheet" />
+<meta name="description" content="StockViz Dashboard Predicton Markets - Kalshi and Polymarket" />
+<meta property="og:image" content="https://avatars3.githubusercontent.com/u/21966469?s=400&v=4" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">StockViz</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-globe"></span>
+     
+    Macro
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="https://stockviz.github.io/reports01/macro/rp-bnd.html">Fixed Income</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports01/macro/rp-cur.html">Currencies</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports01/macro/rp-cmdy.html">Commodities</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-arrows-v"></span>
+     
+    52w H&amp;L
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="https://stockviz.github.io/reports01/eq/52wk-IN.html">India</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports01/eq/52wk-US.html">US</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-rocket"></span>
+     
+    ATH
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="https://stockviz.github.io/reports01/eq/ath-IN.html">India</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports01/eq/ath-US.html">US</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-magnet"></span>
+     
+    Drawdowns
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="https://stockviz.github.io/reports01/eq/drawdowns-IN.html">India</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports01/eq/drawdowns-US.html">US</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-train"></span>
+     
+    Streaks
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="https://stockviz.github.io/reports01/eq/streaks-IN.html">India</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports01/eq/streaks-US.html">US</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-hand-pointer-o"></span>
+     
+    Indian Indices
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="https://stockviz.github.io/reports01/index/rp-risk.html">Performance Metrics</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports01/index/rp-IN.html">Index Changes</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports01/index/rp-MKT-CAP.html">Classification Changes</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports01/index/rp-industry.html">Industry Metrics</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports01/index/rp-syn.html">Synthetic Indices</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports01/index/rp-vol-NIFTY.html">NIFTY Volatility</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports01/index/rp-valuations.html">Valuations</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports01/eq/results-IN.html">Result Dates</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports02/eq-in/rp-margin.html">Margin Report</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-shopping-bag"></span>
+     
+    Funds
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="https://stockviz.github.io/reports03/mf/rp-IN.html">Indian Mutual Funds</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports03/pms/rp-IN.html">Indian PMS</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports02/etf-us/rp-risk.html">US ETFs</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports02/etf-us/rp-sector.html">US Sector ETFs</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports02/etf-us/rp-country.html">Country $ ETFs</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-percent"></span>
+     
+    Fama-French
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="https://stockviz.github.io/reports02/etf-us/rp-fama-french-industry.html">Industry</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports02/etf-us/rp-fama-french-factors.html">Factors</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports02/etf-us/rp-fama-french-regression.html">Regressions</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://stockviz.biz">
+    <span class="fa fa-home"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://stockviz.substack.com">
+    <span class="fa fa-envelope-o"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Daily Media Digest</h1>
+<h3 class="subtitle">2026-10-18</h3>
+
+</div>
+
+<div id="TOC">
+<ul>
+<li><a
+href="#white-house-official-discusses-central-asian-visits-starlink-slowdown-sanctions-waivers-and-global-crises"
+id="toc-white-house-official-discusses-central-asian-visits-starlink-slowdown-sanctions-waivers-and-global-crises">White
+House Official Discusses Central Asian Visits, Starlink Slowdown,
+Sanctions Waivers, and Global Crises</a></li>
+<li><a
+href="#indian-refineries-boost-fuel-exports-to-west-while-processing-russian-crude"
+id="toc-indian-refineries-boost-fuel-exports-to-west-while-processing-russian-crude">Indian
+Refineries Boost Fuel Exports to West While Processing Russian
+Crude</a></li>
+<li><a
+href="#market-rallies-on-it-surge-geo-megaipo-spotlight-and-taxation-debate"
+id="toc-market-rallies-on-it-surge-geo-megaipo-spotlight-and-taxation-debate">Market
+Rallies on IT Surge, GEO Mega‑IPO Spotlight, and Taxation
+Debate</a></li>
+<li><a href="#yes" id="toc-yes">Yes</a></li>
+<li><a
+href="#tata-trusts-emphasizes-measurable-impact-in-healthcare-expansion"
+id="toc-tata-trusts-emphasizes-measurable-impact-in-healthcare-expansion">Tata
+Trusts Emphasizes Measurable Impact in Healthcare Expansion</a></li>
+<li><a href="#himadri-speciality-q2-fy27-net-profit-soars-31"
+id="toc-himadri-speciality-q2-fy27-net-profit-soars-31">Himadri
+Speciality Q2 FY27 Net Profit Soars 31</a></li>
+<li><a
+href="#indias-cancer-drug-crisis-skyhigh-prices-push-patients-toward-bankruptcy"
+id="toc-indias-cancer-drug-crisis-skyhigh-prices-push-patients-toward-bankruptcy">India’s
+Cancer Drug Crisis: Sky‑High Prices Push Patients Toward
+Bankruptcy</a></li>
+<li><a
+href="#indias-booming-homeconcert-scene-redefines-classical-music-gigs"
+id="toc-indias-booming-homeconcert-scene-redefines-classical-music-gigs">India’s
+Booming Home‑Concert Scene Redefines Classical Music Gigs</a></li>
+<li><a
+href="#litigation-funding-fuels-highstakes-inheritance-battles-in-india"
+id="toc-litigation-funding-fuels-highstakes-inheritance-battles-in-india">Litigation
+Funding Fuels High‑Stakes Inheritance Battles in India</a></li>
+<li><a
+href="#vijaye-raji-joins-amplitude-board-to-accelerate-datadriven-product-development"
+id="toc-vijaye-raji-joins-amplitude-board-to-accelerate-datadriven-product-development">Vijaye
+Raji Joins Amplitude Board to Accelerate Data‑Driven Product
+Development</a></li>
+<li><a href="#ktm-opens-new-ckd-assembly-plant-in-brazil"
+id="toc-ktm-opens-new-ckd-assembly-plant-in-brazil">KTM Opens New CKD
+Assembly Plant in Brazil</a></li>
+<li><a
+href="#indias-revolutnubank-will-emerge-from-a-licensed-bank-not-a-fintech"
+id="toc-indias-revolutnubank-will-emerge-from-a-licensed-bank-not-a-fintech">India’s
+“Revolut‑Nubank” Will Emerge From a Licensed Bank, Not a
+Fintech</a></li>
+<li><a
+href="#navratri-fasting-food-goes-gourmet-as-restaurants-see-demand"
+id="toc-navratri-fasting-food-goes-gourmet-as-restaurants-see-demand">Navratri
+Fasting Food Goes Gourmet as Restaurants See Demand</a></li>
+<li><a
+href="#family-offices-pour-rs-2000-crore-into-pilgrimagetown-hotels"
+id="toc-family-offices-pour-rs-2000-crore-into-pilgrimagetown-hotels">Family
+Offices Pour Rs 2,000 crore into Pilgrimage‑Town Hotels</a></li>
+<li><a
+href="#trump-waives-potential-100-tariffs-on-indian-russian-oil-imports-ahead-of-midterms"
+id="toc-trump-waives-potential-100-tariffs-on-indian-russian-oil-imports-ahead-of-midterms">Trump
+Waives Potential 100% Tariffs on Indian Russian Oil Imports Ahead of
+Midterms</a></li>
+<li><a
+href="#reliance-and-blinkit-executives-charged-in-maharashtra-foodsafety-probe"
+id="toc-reliance-and-blinkit-executives-charged-in-maharashtra-foodsafety-probe">Reliance
+and Blinkit Executives Charged in Maharashtra Food‑Safety Probe</a></li>
+</ul>
+</div>
+
+<div
+id="white-house-official-discusses-central-asian-visits-starlink-slowdown-sanctions-waivers-and-global-crises"
+class="section level2">
+<h2>White House Official Discusses Central Asian Visits, Starlink
+Slowdown, Sanctions Waivers, and Global Crises</h2>
+<p>The spokesperson explained the president’s recent Central Asian trip
+as part of broader diplomatic outreach, clarified that Starlink is a
+commercial service while Star Shield is a separate U.S. military
+product, and denied any U.S. role in the temporary slowdown of Starlink
+speeds in Ukraine, noting the service has been restored. He defended the
+60‑day sanctions and tariff waivers on Russian oil and diesel as a
+needed period to assess global economic impacts, especially on energy
+markets and allied nations like India. Regarding violence in the West
+Bank, he said the administration is reviewing the incident involving a
+U.S. journalist and will seek a thorough investigation and communication
+with Israel. He affirmed agreement with UK intelligence on potential
+Russian‑Iran hybrid attacks, highlighted concerns about escalation in
+Ukraine, and described the Ethiopia‑Eritrea border tension as high risk,
+arguing that modest sanction relief aims to keep diplomatic channels
+open and prevent a broader conflict</p>
+<p><em>CNBC-TV18: <a href="https://youtu.be/wxfiRHlfP2g"
+class="uri">https://youtu.be/wxfiRHlfP2g</a> 09:41 (567s) </em></p>
+</div>
+<div
+id="indian-refineries-boost-fuel-exports-to-west-while-processing-russian-crude"
+class="section level2">
+<h2>Indian Refineries Boost Fuel Exports to West While Processing
+Russian Crude</h2>
+<p><a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.IOC.html">IOC</a>
+<a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.RELIANCE.html">RELIANCE</a>
+<a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.ATHERENERG.html">ATHERENERG</a></p>
+<p>In September, refineries in India (along with those in Turkey and
+Brunei) shipped €1 billion ($1.2 billion) of oil products to
+sanction‑imposing countries—a 43 % rise from August. Reliance’s Jamnagar
+plant accounted for six of seven EU cargoes despite the EU’s ban on fuel
+refined from Russian crude, which the CREA report says exploits a
+loophole that exempts net crude exporters. EU imports of such products
+rose 80 % in value, including a €104 million diesel shipment to
+Rotterdam. Indian imports of Russian crude fell 13 % to a six‑month low,
+with Jamnagar’s intake down 27 %, but Vadinar overtook it as the largest
+importer. Overall, India spent €4.1 billion on Russian hydrocarbons in
+September, becoming Russia’s second‑largest fossil‑fuel buyer after
+China. Analysts attribute the import decline to tighter supply,
+competition from China and US pressure, and expect September‑October
+imports to stabilize at 1.8‑1.9 million barrels per day</p>
+<p><em><a
+href="https://economictimes.indiatimes.com/industry/energy/oil-gas/indian-refiners-fuel-exports-to-the-west-jump-43-as-they-keep-processing-russian-crude/articleshow/135024275.cms">economictimes.indiatimes.com</a>
+09:41</em></p>
+</div>
+<div
+id="market-rallies-on-it-surge-geo-megaipo-spotlight-and-taxation-debate"
+class="section level2">
+<h2>Market Rallies on IT Surge, GEO Mega‑IPO Spotlight, and Taxation
+Debate</h2>
+<p><a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.TANLA.html">TANLA</a>
+<a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.HINDALCO.html">HINDALCO</a>
+<a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.TECHM.html">TECHM</a>
+<a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.HCLINSYS.html">HCL-INSYS</a>
+<code>AIRTELPP</code> <a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.WIPRO.html">WIPRO</a>
+<a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.TCS.html">TCS</a></p>
+<p>The roundtable highlighted a strong second consecutive week of market
+gains driven by a 12% jump in the Nifty IT index, its best performance
+in 18 years, while FMCG and pharma lagged. Analysts praised Tech
+Mahindra’s margin growth and discussed the broader IT sector’s role in
+AI integration. Large‑cap IT stocks outperformed mid‑caps, and there
+were mixed views on whether the rally is sustainable or a trading
+bounce. The conversation shifted to the upcoming GEO Platforms IPO—set
+to be India’s largest, raising ₹30,200 crore with a market cap of up to
+₹10.3 lakh crore—examining its valuation, growth engines (mobility, home
+broadband, enterprise services), and sector outlook. Finally, the panel
+debated potential changes to equity taxation and the need for continued
+foreign inflows to fund fiscal deficits, concluding with cautious
+optimism on telecom and manufacturing prospects</p>
+<p><em>CNBC-TV18: <a href="https://youtu.be/WWcUfyRS7UE"
+class="uri">https://youtu.be/WWcUfyRS7UE</a> 08:30 (1351s) </em></p>
+</div>
+<div id="yes" class="section level2">
+<h2>Yes</h2>
+<p>Centofala Strike Ends with Union Ratification</p>
+<p><a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.YESBANK.html">YESBANK</a></p>
+<p>Workers from the Distrito Centinela and Minera Esperanza unions at
+Antofagasta’s Centinela copper mine voted 94.49% to approve a new
+collective bargaining agreement, ending the strike that began on Oct 7.
+The mine maintained normal production throughout, and the settlement
+supports global copper prices amid supply concerns</p>
+<p><em><a
+href="https://www.livemint.com/companies/antofagastas-centinela-strike-ends-after-deal-with-unions-11792298239854.html">livemint.com</a>
+08:30</em></p>
+</div>
+<div
+id="tata-trusts-emphasizes-measurable-impact-in-healthcare-expansion"
+class="section level2">
+<h2>Tata Trusts Emphasizes Measurable Impact in Healthcare
+Expansion</h2>
+<p><code>TATACAP</code> <a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.NSIL.html">NSIL</a></p>
+<p>Tata Trusts aims to create 40‑50 not‑for‑profit general hospitals
+using a cross‑subsidy model, with success judged on lasting, measurable
+outcomes rather than spending. Chairman Noel Tata’s 2025‑26 report calls
+for evidence of difference made, citing a five‑year strategy (2026‑2031)
+targeting 2.5 million people across 75 blocks, bolstering over 100
+public health facilities, and expanding distributed cancer‑care services
+(106,626 outpatient visits, 24,874 chemo cycles, 2,879 surgeries). The
+Trusts will continue institution‑building, partnering with like‑minded
+organisations, and adapt to a more accountable philanthropic
+landscape</p>
+<p><em><a
+href="https://www.livemint.com/companies/news/tata-trusts-to-build-40-50-hospitals-focus-on-measurable-impact-noel-tata-11792295305604.html">livemint.com</a>
+</em></p>
+</div>
+<div id="himadri-speciality-q2-fy27-net-profit-soars-31"
+class="section level2">
+<h2>Himadri Speciality Q2 FY27 Net Profit Soars 31</h2>
+<p><a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.HSCL.html">HSCL</a></p>
+<p>Clean‑tech firm Himadri Speciality Chemical reported a 31% rise in
+consolidated net profit to ₹231.32 crore for the July‑September quarter
+of FY27, up from ₹176.14 crore a year earlier. Total income jumped to
+₹1,733.32 crore from ₹1,106.96 crore, driven by strong performance in
+carbon materials and chemicals (₹1,539.02 crore) and a modest
+contribution from its power segment (₹33.32 crore). The Kolkata‑based
+company’s portfolio spans clean power solutions, advanced battery
+materials, and specialty carbon black</p>
+<p><em><a
+href="https://www.thehindubusinessline.com/companies/himadri-speciality-q2-results-net-profit-jumps-31-to-231-cr/article71599084.ece">thehindubusinessline.com</a>
+</em></p>
+</div>
+<div
+id="indias-cancer-drug-crisis-skyhigh-prices-push-patients-toward-bankruptcy"
+class="section level2">
+<h2>India’s Cancer Drug Crisis: Sky‑High Prices Push Patients Toward
+Bankruptcy</h2>
+<p><a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.MAXHEALTH.html">MAXHEALTH</a>
+<code>ABANSENT</code></p>
+<p>The article highlights the crippling cost of cancer treatments in
+India, illustrated by the case of 65‑year‑old Surekha Panicker, who
+spent over ₹35 lakh on immunotherapy, surgery, and related care,
+exhausting her savings. Supreme Court observations have exposed massive
+mark‑ups, with drugs bought by retailers for ₹2,700 being sold to
+patients for ₹27,000. While private hospitals justify higher prices
+citing administration, infrastructure, and profit margins (typically
+8‑9 % net), activists argue for greater transparency and regulation. The
+government proposes capping trade margins for non‑scheduled cancer drugs
+at 30 % of MRP, which could cut prices by up to 70 % and
+save ₹2,500 crore annually, but critics say this won’t affect patented
+drugs whose base prices remain exorbitant. Studies show pooled
+procurement (e.g., National Cancer Grid) can yield 23‑99 % savings,
+saving ₹13.2 billion compared with MRP. Patient‑assistance schemes are
+limited, and the Jan Aushadhi scheme offers drastically lower prices for
+generic drugs. Experts call for broader price‑control mechanisms,
+production‑cost‑based pricing, and standardized hospital reimbursement
+to prevent patients from facing financial ruin while seeking life‑saving
+cancer care</p>
+<p><em><a
+href="https://economictimes.indiatimes.com/industry/healthcare/biotech/healthcare/the-burden-of-cancer-drugs-millions-battle-exorbitant-prices-as-life-saving-treatment-slips-out-of-reach/articleshow/135023322.cms">economictimes.indiatimes.com</a>
+</em></p>
+</div>
+<div
+id="indias-booming-homeconcert-scene-redefines-classical-music-gigs"
+class="section level2">
+<h2>India’s Booming Home‑Concert Scene Redefines Classical Music
+Gigs</h2>
+<p><a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.CCHHL.html">CCHHL</a>
+<a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.HINDWAREAP.html">HINDWAREAP</a>
+<a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.INDOUS.html">INDOUS</a>
+<a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.3MINDIA.html">3MINDIA</a></p>
+<p>Since 2018, intimate “baithak” concerts—hosted in apartments,
+terraces, farmhouses and cafés—have surged across India, turning private
+living spaces into ticketed cultural hubs. Pioneers like Sukanya
+Banerjee and Tejas Jaishankar’s Upstairs With Us grew from 500‑seat
+evenings to 3,000‑guest events, while Once Upon India expanded to 20
+cities, and regional groups such as Agra Jamming Club, Tiny Room
+Concerts, and Home At Last cater to 100‑plus attendees with diverse
+line‑ups (classical, ghazal, Sufi, Bollywood, indie). Audiences are
+mainly urban professionals (25‑45) seeking personal, story‑rich
+experiences beyond noisy clubs, often returning repeatedly. Organisers
+fund artists (₹20‑40 k fees) via ticket sales (₹500‑3,000),
+contributions, and occasional hospitality sponsorships, but face hurdles
+in venue access, audience acquisition, and keeping programming fresh.
+The model is viewed as a viable cultural business and a potential
+touring circuit for musicians, promising more weekday events, workshops,
+and curated playlists to broaden engagement</p>
+<p><em><a
+href="https://economictimes.indiatimes.com/industry/media/entertainment/music-comes-home-inside-indias-growing-market-for-intimate-music-gigs/articleshow/135023275.cms">economictimes.indiatimes.com</a>
+</em></p>
+</div>
+<div
+id="litigation-funding-fuels-highstakes-inheritance-battles-in-india"
+class="section level2">
+<h2>Litigation Funding Fuels High‑Stakes Inheritance Battles in
+India</h2>
+<p><a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.FIVESTAR.html">FIVESTAR</a>
+<a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.SHAREINDIA.html">SHAREINDIA</a></p>
+<p>Litigation financiers are increasingly backing costly inheritance
+disputes, offering to cover legal expenses in exchange for a share of
+any recovery. Cases like Amit Aggarwal’s Rs 250 crore land fight
+illustrate the appeal for cash‑poor but asset‑rich claimants. Firms such
+as LegalPay, Five Rivers Capital, Elf Partners and Share Samadhan
+evaluate each claim’s legal merit, evidentiary strength, stage of
+litigation, opponent’s finances and exit prospects, often demanding
+potential returns of 5‑10 times the capital. They typically fund
+high‑value assets (Rs 50 crore+), prefer clear monetisation routes
+(buyer, court‑ordered sale, co‑heir buy‑out), and reject cases lacking a
+viable exit despite strong legal standing. While the model can
+accelerate settlements, investors remain cautious, as successful
+litigation does not guarantee recoverable cash</p>
+<p><em><a
+href="https://economictimes.indiatimes.com/industry/banking/finance/cash-landing-on-you-litigation-funders-bet-on-inheritance-battles-over-crores/articleshow/135023272.cms">economictimes.indiatimes.com</a>
+</em></p>
+</div>
+<div
+id="vijaye-raji-joins-amplitude-board-to-accelerate-datadriven-product-development"
+class="section level2">
+<h2>Vijaye Raji Joins Amplitude Board to Accelerate Data‑Driven Product
+Development</h2>
+<p><a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.ASPINWALL.html">ASPINWALL</a>
+<a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.WIPRO.html">WIPRO</a></p>
+<p>Statsig founder and OpenAI CTO Vijaye Raji has been appointed to
+Amplitude’s Board of Directors as the two companies integrate, keeping
+Statsig operating as a distinct platform within Amplitude. Raji, who
+built the leading experimentation platform at Statsig and previously
+held senior engineering roles at Facebook/Meta and Microsoft, will help
+steer the combined effort to give teams of all sizes access to robust
+customer‑behavior analytics, rigorous experimentation tools, and
+AI‑enhanced product development. He emphasizes that data, curiosity, and
+willingness to adapt are essential for creating value, and sees the
+board role as a way to further democratize these capabilities</p>
+<p><em><a
+href="https://www.livemint.com/companies/people/meet-vijaye-raji-statsig-founder-and-openai-cto-now-joining-amplitude-s-board-of-directors-11792285217627.html">livemint.com</a>
+</em></p>
+</div>
+<div id="ktm-opens-new-ckd-assembly-plant-in-brazil"
+class="section level2">
+<h2>KTM Opens New CKD Assembly Plant in Brazil</h2>
+<p><a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.BAJAJAUTO.html">BAJAJ-AUTO</a></p>
+<p>Bajaj Auto‑owned KTM inaugurated a fully owned CKD motorcycle
+assembly facility in Manaus with a 20,000‑unit annual capacity,
+dedicated to KTM and Husqvarna models across motocross, enduro and
+adventure segments. The plant, built with a R$20 million investment,
+will produce ten models and target 3,500 units by end‑2026, expanding to
+higher volumes thereafter. It marks KTM’s shift from its previous
+partnership with Dafra to an independent operation, co‑located with
+Bajaj’s facility. KTM aims to grow its dealer network from 12 to 30
+outlets by 2027</p>
+<p><em><a
+href="https://www.thehindubusinessline.com/companies/bajaj-auto-owned-ktm-opens-new-motorcycle-assembly-plant-in-brazil/article71598985.ece">thehindubusinessline.com</a>
+</em></p>
+</div>
+<div
+id="indias-revolutnubank-will-emerge-from-a-licensed-bank-not-a-fintech"
+class="section level2">
+<h2>India’s “Revolut‑Nubank” Will Emerge From a Licensed Bank, Not a
+Fintech</h2>
+<p><a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.AUBANK.html">AUBANK</a></p>
+<p>Slice Small Finance Bank, led by CEO Rajan Bajaj, argues that India’s
+answer to global digital banks will be built inside a full‑service bank
+rather than a fintech‑only model. After merging with North East Small
+Finance Bank in Oct 2024, Slice now operates with a bank licence,
+focusing on technology‑driven customer acquisition, AI‑based KYC, and
+in‑house core banking to cut costs and speed product changes. Deposits
+have more than doubled to ₹5,132.6 cr (Casa 39.9% of total) while
+borrowings fell, and the bank offers a flat 5.5% annual savings rate.
+Its merchant app, launched Nov 2025, provides current accounts, QR
+payments, and collateral‑free loans up to ₹10 lakh, driving ₹6,000 cr in
+merchant payments and ₹162 cr in monthly loan disbursements.
+Non‑interest income now makes up ~42% of revenue, with a shift toward
+wealth and insurance distribution. Financials show a turnaround: net
+profit of ₹48.4 cr in FY26 (vs. a ₹216.7 cr loss FY25) and ₹50.9 cr in
+Q2 FY27, while GNPA improved to 4.4%. Bajaj sees operating leverage from
+tech spend, plans to deepen the deposit base, expand fee‑based services,
+and target an IPO by 2028, aiming to become the primary bank for all
+customers</p>
+<p><em><a
+href="https://www.livemint.com/companies/indias-revolut-or-nubank-will-emerge-from-a-bank-not-a-fintech-slice-ceo-rajan-bajaj-11792148763171.html">livemint.com</a>
+</em></p>
+</div>
+<div id="navratri-fasting-food-goes-gourmet-as-restaurants-see-demand"
+class="section level2">
+<h2>Navratri Fasting Food Goes Gourmet as Restaurants See Demand</h2>
+<p><a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.TAJGVK.html">TAJGVK</a>
+<a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.GFSTEELS.html">GFSTEELS</a>
+<a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.RGL.html">RGL</a>
+<a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.INDIANB.html">INDIANB</a>
+<a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.SWIGGY.html">SWIGGY</a>
+<a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.BRNL.html">BRNL</a>
+<code>GRAVISSHO</code></p>
+<p>Restaurants across India are launching upscale Navratri thali menus,
+transforming traditionally home‑cooked, diet‑restricted meals into
+fine‑dining experiences. Offerings range from Indian Accent’s ₹5,500
+six‑course tasting to Ishaara’s ₹990 thali and Hosa’s ₹1,149 thali,
+featuring creative dishes like lauki ice‑cream, sweet‑potato sago
+paniyaram, green‑pea quinoa khichdi, and pumpkin mor kulambu. Swiggy’s
+2025 Navratri data shows over 100,000 vrat thalis delivered, indicating
+strong consumer appetite. Chefs say the menus attract both regular
+patrons and festival shoppers, boost footfall in malls and hotels, and
+provide a platform to test new recipes. The trend allows eateries to
+cater to religious observance without compromising on quality,
+broadening their audience and creating repeat‑visit opportunities</p>
+<p><em><a
+href="https://economictimes.indiatimes.com/industry/services/hotels-/-restaurants/navratri-fasting-food-goes-gourmet-as-restaurants-see-demand/articleshow/135019139.cms">economictimes.indiatimes.com</a>
+</em></p>
+</div>
+<div id="family-offices-pour-rs-2000-crore-into-pilgrimagetown-hotels"
+class="section level2">
+<h2>Family Offices Pour Rs 2,000 crore into Pilgrimage‑Town Hotels</h2>
+<p><code>HOTELRUGBY</code> <a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.INDHOTEL.html">INDHOTEL</a>
+<a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.ROHLTD.html">ROHLTD</a>
+<code>BENARAS</code></p>
+<p>Wealthy Indian family offices are investing roughly Rs 2,000 crore in
+branded hotel projects across major pilgrimage destinations such as
+Deoghar, Mathura, Salasar Balaji, Khatu Shyamji, Saurashtra and Udupi.
+Deals include a 137‑room upscale IHCL‑branded hotel in Udupi, a 108‑room
+Sarovar‑managed hotel in Salasar Balaji, a 145‑room Welcomhotel by ITC
+in Saurashtra, and a 120‑room Royal Orchid property near Khatu Shyamji.
+Investors, primarily regional industrial and real estate families, view
+religious travel as a resilient demand driver, offering steady occupancy
+for mid‑scale (80‑100 rooms) properties. Improved infrastructure is
+turning day‑trip sites into overnight stays, creating growth
+opportunities for hotel chains beyond saturated urban markets. The
+capital is patient, land‑backed, and motivated by both faith and
+commercial conviction, though feasibility remains essential</p>
+<p><em><a
+href="https://economictimes.indiatimes.com/industry/services/hotels-/-restaurants/from-deoghar-to-udupi-family-offices-bet-rs-2000-crore-on-hotels-in-pilgrimage-towns/articleshow/135018465.cms">economictimes.indiatimes.com</a>
+</em></p>
+</div>
+<div
+id="trump-waives-potential-100-tariffs-on-indian-russian-oil-imports-ahead-of-midterms"
+class="section level2">
+<h2>Trump Waives Potential 100% Tariffs on Indian Russian Oil Imports
+Ahead of Midterms</h2>
+<p><a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.RELIANCE.html">RELIANCE</a>
+<a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.SAIL.html">SAIL</a>
+<a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.SANDUMA.html">SANDUMA</a>
+<a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.AIAENG.html">AIAENG</a>
+<a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.GMDCLTD.html">GMDCLTD</a></p>
+<p>President Donald Trump invoked a national‑interest waiver under the
+Graham Act to suspend the 100% tariffs proposed by the Lindsey O. Graham
+Sanctioning Russia and Iran Act on India, the world’s top buyer of
+Russian oil. The move, tied to a new diesel supply deal with Russia and
+occurring just before U.S. Secretary of State Marco Rubio’s visit to
+India, relieves India from penalties for purchasing Russian crude and
+LNG, while keeping the option to reinstate sanctions later. The decision
+aims to maintain strategic ties amid broader geopolitical tensions,
+including the war in Iran and regional security concerns</p>
+<p><em><a
+href="https://economictimes.indiatimes.com/industry/energy/oil-gas/trump-looks-to-rein-in-fuel-prices-ahead-of-midterms-waives-threat-of-100-tariffs-on-india-over-russian-oil-citing-national-interest-as-us-inks-diesel-pact-with-moscow/articleshow/135018802.cms">economictimes.indiatimes.com</a>
+</em></p>
+</div>
+<div
+id="reliance-and-blinkit-executives-charged-in-maharashtra-foodsafety-probe"
+class="section level2">
+<h2>Reliance and Blinkit Executives Charged in Maharashtra Food‑Safety
+Probe</h2>
+<p><code>TATACOFFEE</code> <a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.GANESHCP.html">GANESHCP</a>
+<code>ZOMATO</code> <code>RCOM</code></p>
+<p>An FIR has been filed in Thane, Maharashtra, against more than ten
+senior officials from Reliance Consumer Products, Reliance Retail,
+Zomato’s Hyperpure and quick‑commerce platform Blinkit for allegedly
+diverting and selling expired, damaged and rejected food items. The
+Maharashtra Food &amp; Drugs Administration seized food worth
+₹48.09 lakh during a multi‑district crackdown, naming Blinkit CEO
+Albinder Dhindsa and Reliance executives V Subramaniam, Ashok
+Kumar Singh, Vijay Bhikaji Kharmale and Nilesh Ramdasrao Deshmukh. The
+case is registered under the Food Safety and Standards Act, 2006 and the
+Bharatiya Nyaya Sanhita, 2023, amid a broader state‑wide sweep that has
+targeted numerous restaurants, clubs and dark‑store operators for
+hygiene violations. Emails to Reliance and Zomato have gone
+unanswered</p>
+<p><em><a
+href="https://economictimes.indiatimes.com/industry/cons-products/food/reliance-consumer-and-blinkit-executives-face-fir-in-food-safety-case/articleshow/135019135.cms">economictimes.indiatimes.com</a>
+</em></p>
+</div>
+
+&nbsp;
+&nbsp;
+<hr />
+<p style="text-align: center;">Copyright &copy; 2023 SAS Data Analytics Pvt. Ltd. All rights reserved.</p>
+<p style="text-align: center;"><a href="https://github.com/stockviz/reports/issues">&#x1F41E;</a></p>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
