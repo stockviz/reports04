@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Daily Media Digest</title>
+
+<script src="rmdlib/header-attrs-2.30/header-attrs.js"></script>
+<script src="rmdlib/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="rmdlib/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="rmdlib/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="rmdlib/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="rmdlib/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="rmdlib/navigation-1.1/tabsets.js"></script>
+<link href="rmdlib/font-awesome-6.4.0/css/all.min.css" rel="stylesheet" />
+<link href="rmdlib/font-awesome-6.4.0/css/v4-shims.min.css" rel="stylesheet" />
+<meta name="description" content="StockViz Dashboard Predicton Markets - Kalshi and Polymarket" />
+<meta property="og:image" content="https://avatars3.githubusercontent.com/u/21966469?s=400&v=4" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">StockViz</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-globe"></span>
+     
+    Macro
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="https://stockviz.github.io/reports01/macro/rp-bnd.html">Fixed Income</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports01/macro/rp-cur.html">Currencies</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports01/macro/rp-cmdy.html">Commodities</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-arrows-v"></span>
+     
+    52w H&amp;L
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="https://stockviz.github.io/reports01/eq/52wk-IN.html">India</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports01/eq/52wk-US.html">US</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-rocket"></span>
+     
+    ATH
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="https://stockviz.github.io/reports01/eq/ath-IN.html">India</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports01/eq/ath-US.html">US</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-magnet"></span>
+     
+    Drawdowns
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="https://stockviz.github.io/reports01/eq/drawdowns-IN.html">India</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports01/eq/drawdowns-US.html">US</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-train"></span>
+     
+    Streaks
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="https://stockviz.github.io/reports01/eq/streaks-IN.html">India</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports01/eq/streaks-US.html">US</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-hand-pointer-o"></span>
+     
+    Indian Indices
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="https://stockviz.github.io/reports01/index/rp-risk.html">Performance Metrics</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports01/index/rp-IN.html">Index Changes</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports01/index/rp-MKT-CAP.html">Classification Changes</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports01/index/rp-industry.html">Industry Metrics</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports01/index/rp-syn.html">Synthetic Indices</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports01/index/rp-vol-NIFTY.html">NIFTY Volatility</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports01/index/rp-valuations.html">Valuations</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports01/eq/results-IN.html">Result Dates</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports02/eq-in/rp-margin.html">Margin Report</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-shopping-bag"></span>
+     
+    Funds
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="https://stockviz.github.io/reports03/mf/rp-IN.html">Indian Mutual Funds</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports03/pms/rp-IN.html">Indian PMS</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports02/etf-us/rp-risk.html">US ETFs</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports02/etf-us/rp-sector.html">US Sector ETFs</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports02/etf-us/rp-country.html">Country $ ETFs</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-percent"></span>
+     
+    Fama-French
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="https://stockviz.github.io/reports02/etf-us/rp-fama-french-industry.html">Industry</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports02/etf-us/rp-fama-french-factors.html">Factors</a>
+    </li>
+    <li>
+      <a href="https://stockviz.github.io/reports02/etf-us/rp-fama-french-regression.html">Regressions</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://stockviz.biz">
+    <span class="fa fa-home"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://stockviz.substack.com">
+    <span class="fa fa-envelope-o"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Daily Media Digest</h1>
+<h3 class="subtitle">2026-11-15</h3>
+
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#noel-tata-on-tata-sons-listing-preserving-the-tata-way"
+id="toc-noel-tata-on-tata-sons-listing-preserving-the-tata-way">Noel
+Tata on Tata Sons Listing: Preserving the Tata Way</a></li>
+<li><a
+href="#megaspeed-confirms-former-execs-departure-amid-spy-allegations"
+id="toc-megaspeed-confirms-former-execs-departure-amid-spy-allegations">Megaspeed
+Confirms Former Exec’s Departure Amid Spy Allegations</a></li>
+<li><a
+href="#india-u19-clinches-record-ninth-acc-asia-title-with-historic-3399-chase"
+id="toc-india-u19-clinches-record-ninth-acc-asia-title-with-historic-3399-chase">India
+U19 Clinches Record Ninth ACC Asia Title with Historic 339/9
+Chase</a></li>
+<li><a href="#itc-forecasts-savlonnimyle-spending-to-double-to-2000-cr"
+id="toc-itc-forecasts-savlonnimyle-spending-to-double-to-2000-cr">ITC
+Forecasts Savlon‑Nimyle Spending to Double to ₹2,000 Cr</a></li>
+<li><a href="#tata-groups-dual-mission-philanthropy-nationbuilding"
+id="toc-tata-groups-dual-mission-philanthropy-nationbuilding">Tata
+Group’s Dual Mission: Philanthropy &amp; Nation‑Building</a></li>
+<li><a
+href="#personal-lives-corporate-risks-and-national-security-the-nvidia-ceo-controversy"
+id="toc-personal-lives-corporate-risks-and-national-security-the-nvidia-ceo-controversy">Personal
+Lives, Corporate Risks, and National Security: The Nvidia CEO
+Controversy</a></li>
+<li><a href="#jensen-huangs-alleged-office-outbursts"
+id="toc-jensen-huangs-alleged-office-outbursts">Jensen Huang’s Alleged
+Office Outbursts</a></li>
+<li><a href="#tata-steel-aims-to-finalize-ninl-merger-this-fiscal-year"
+id="toc-tata-steel-aims-to-finalize-ninl-merger-this-fiscal-year">Tata
+Steel aims to finalize NINL merger this fiscal year</a></li>
+<li><a
+href="#heart-health-diagnosis-treatment-options-and-prevention-strategies"
+id="toc-heart-health-diagnosis-treatment-options-and-prevention-strategies">Heart
+Health: Diagnosis, Treatment Options, and Prevention Strategies</a></li>
+<li><a
+href="#ongc-takes-over-cambay-block-vedanta-books-rs-379-cr-impairment"
+id="toc-ongc-takes-over-cambay-block-vedanta-books-rs-379-cr-impairment">ONGC
+Takes Over Cambay Block; Vedanta Books Rs 379 Cr Impairment</a></li>
+<li><a
+href="#noel-tata-on-steering-tata-trusts-toward-impactdriven-institutional-growth"
+id="toc-noel-tata-on-steering-tata-trusts-toward-impactdriven-institutional-growth">Noel
+Tata on Steering Tata Trusts Toward Impact‑Driven Institutional
+Growth</a></li>
+<li><a href="#dealerled-revamp-of-ola-electrics-sales-strategy"
+id="toc-dealerled-revamp-of-ola-electrics-sales-strategy">Dealer‑Led
+Revamp of Ola Electric’s Sales Strategy</a></li>
+<li><a href="#spacexs-historic-starship-landing-captured-live"
+id="toc-spacexs-historic-starship-landing-captured-live">SpaceX’s
+Historic Starship Landing Captured Live</a></li>
+<li><a
+href="#mothersons-indiafocused-expansion-leverages-global-tech-amid-auto-sector-shift"
+id="toc-mothersons-indiafocused-expansion-leverages-global-tech-amid-auto-sector-shift">Motherson’s
+India‑focused expansion leverages global tech amid auto sector
+shift</a></li>
+<li><a href="#aprilia-sxr-gt-175-a-versatile-italianstyled-maxiscooter"
+id="toc-aprilia-sxr-gt-175-a-versatile-italianstyled-maxiscooter">Aprilia
+SXR GT 175: A Versatile, Italian‑Styled Maxi‑Scooter</a></li>
+<li><a
+href="#eternal-revises-2030-allev-delivery-goal-amid-rapid-expansion"
+id="toc-eternal-revises-2030-allev-delivery-goal-amid-rapid-expansion">Eternal
+Revises 2030 All‑EV Delivery Goal Amid Rapid Expansion</a></li>
+<li><a
+href="#himalayan-750-review-bigger-engine-more-tech-still-adventureready"
+id="toc-himalayan-750-review-bigger-engine-more-tech-still-adventureready">Himalayan 750
+Review: Bigger Engine, More Tech, Still Adventure‑Ready</a></li>
+<li><a
+href="#escorts-kubota-to-build-60000tractor-plant-in-up-aiming-for-expansion-and-diversified-growth"
+id="toc-escorts-kubota-to-build-60000tractor-plant-in-up-aiming-for-expansion-and-diversified-growth">Escorts Kubota
+to Build 60,000‑Tractor Plant in UP, Aiming for Expansion and
+Diversified Growth</a></li>
+<li><a
+href="#thomas-kurian-indianborn-tech-leader-eyed-for-nvidia-ceo-role"
+id="toc-thomas-kurian-indianborn-tech-leader-eyed-for-nvidia-ceo-role">Thomas
+Kurian: Indian‑born tech leader eyed for Nvidia CEO role</a></li>
+<li><a
+href="#thomas-cook-india-targets-october-2027-for-resorts-business-demerger-eyes-acquisitions"
+id="toc-thomas-cook-india-targets-october-2027-for-resorts-business-demerger-eyes-acquisitions">Thomas
+Cook India targets October 2027 for resorts business demerger; eyes
+acquisitions</a></li>
+<li><a
+href="#booking.com-targets-longterm-growth-in-india-through-expanded-partner-ecosystem-and-alternative-stays"
+id="toc-booking.com-targets-longterm-growth-in-india-through-expanded-partner-ecosystem-and-alternative-stays">Booking.com
+targets long‑term growth in India through expanded partner ecosystem and
+alternative stays</a></li>
+<li><a
+href="#allahabad-high-court-bars-forceful-vehicle-repossession-by-finance-firms"
+id="toc-allahabad-high-court-bars-forceful-vehicle-repossession-by-finance-firms">Allahabad
+High Court Bars Forceful Vehicle Repossession by Finance Firms</a></li>
+<li><a
+href="#investors-and-elon-musk-urge-nvidia-board-to-keep-jensen-huangs-return-on-the-table"
+id="toc-investors-and-elon-musk-urge-nvidia-board-to-keep-jensen-huangs-return-on-the-table">Investors
+and Elon Musk Urge Nvidia Board to Keep Jensen Huang’s Return on the
+Table</a></li>
+<li><a href="#spacex-achieves-first-midair-capture-of-starship"
+id="toc-spacex-achieves-first-midair-capture-of-starship">SpaceX
+Achieves First Midair Capture of Starship</a></li>
+<li><a
+href="#jpmorgans-card-chief-allison-beer-departs-for-new-opportunity"
+id="toc-jpmorgans-card-chief-allison-beer-departs-for-new-opportunity">JPMorgan’s
+Card Chief Allison Beer Departs for New Opportunity</a></li>
+</ul>
+</div>
+
+<div id="noel-tata-on-tata-sons-listing-preserving-the-tata-way"
+class="section level2">
+<h2>Noel Tata on Tata Sons Listing: Preserving the Tata Way</h2>
+<p><a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.TATASTEEL.html">TATASTEEL</a>
+<a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.BCG.html">BCG</a>
+<a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.NSIL.html">NSIL</a></p>
+<p>Noel Tata, as chair of the Tata Trust and guardian of the group’s
+values, stresses that the “Tata way” is rooted in philanthropy preceding
+commerce, with profits reinvested into public goods like hospitals,
+education, and disaster relief. He warns that listing Tata Sons could
+shift focus to shareholder profit, threatening this ethos, the
+continuity of ownership, and the group’s internal support system. Citing
+the historic resistance to privatizing Tata Steel, he reaffirms the
+commitment to “return on India” over pure financial returns and pledges
+the Trust will work with regulators to protect the Tata way’s legacy</p>
+<p><em>NDTV: <a href="https://youtu.be/vCd1iFYvIk8"
+class="uri">https://youtu.be/vCd1iFYvIk8</a> 13:00 (386s) </em></p>
+</div>
+<div id="megaspeed-confirms-former-execs-departure-amid-spy-allegations"
+class="section level2">
+<h2>Megaspeed Confirms Former Exec’s Departure Amid Spy Allegations</h2>
+<p>Singapore‑based cloud‑computing firm Megaspeed said Alice Huang left
+in August 2025 and has launched an internal probe into its business and
+supply chain after media reports linked her to alleged Chinese espionage
+and an extramarital affair with Nvidia CEO Jensen Huang; the spy
+accusations remain unproven</p>
+<p><em><a
+href="https://www.livemint.com/companies/news/jensen-huang-spy-scandal-singapore-based-megaspeed-breaks-silence-on-alice-huang-says-she-left-the-firm-last-year-11794732579744.html">livemint.com</a>
+13:00</em></p>
+</div>
+<div
+id="india-u19-clinches-record-ninth-acc-asia-title-with-historic-3399-chase"
+class="section level2">
+<h2>India U19 Clinches Record Ninth ACC Asia Title with Historic 339/9
+Chase</h2>
+<p><a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.MOTILALOFS.html">MOTILALOFS</a></p>
+<p>India’s Under‑19 team chased down a massive 338‑run target against
+Pakistan at the AI Ameri Cricket Ground in Oman, winning by one wicket
+and securing their ninth ACC Men’s Under‑19 Asia Cup. After being 252/8,
+the lower order—led by Mohith Ulu’s unbeaten 49 off 26 balls and Manal
+Chauhan’s 47—steered the chase to 339/9. Key contributions also came
+from captain Lakshraj (80) and Aravi Sevag (58). Bowler Kavir Patel took
+four wickets, and the victory ends a five‑year continental trophy
+drought for India</p>
+<p><em>CNBC-TV18: <a href="https://youtu.be/PpuiBUDbmfg"
+class="uri">https://youtu.be/PpuiBUDbmfg</a> 12:58 (293s) </em></p>
+</div>
+<div id="itc-forecasts-savlonnimyle-spending-to-double-to-2000-cr"
+class="section level2">
+<h2>ITC Forecasts Savlon‑Nimyle Spending to Double to ₹2,000 Cr</h2>
+<p><a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.ITC.html">ITC</a></p>
+<p>ITC expects consumer spending on its health‑hygiene brands Savlon and
+Nimyle to exceed ₹2,000 crore in the medium term, more than doubling
+current levels. Since acquiring Savlon (2015) and Nimyle (2018), the
+brands have grown nine‑fold and eight‑fold respectively, now generating
+over ₹1,000 crore at &gt;20% annual growth. Expansion is driven by
+product innovation, portfolio diversification (Savlon now 30+ products,
+Nimyle 7 products/20 SKUs), broader distribution—including e‑commerce
+and southern India—export initiatives, and leveraging ITC’s R&amp;D,
+supply chain, and neem plantation. The company aims to cement its FMCG
+leadership as India’s personal care market expands toward a ₹8 trillion
+addressable size by 2035</p>
+<p><em><a
+href="https://www.thehindubusinessline.com/companies/itc-expects-consumer-spending-on-savlon-nimyle-to-double-in-medium-term/article71704368.ece">thehindubusinessline.com</a>
+12:58</em></p>
+</div>
+<div id="tata-groups-dual-mission-philanthropy-nationbuilding"
+class="section level2">
+<h2>Tata Group’s Dual Mission: Philanthropy &amp; Nation‑Building</h2>
+<p><a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.TATAPOWER.html">TATAPOWER</a>
+<a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.TATASTEEL.html">TATASTEEL</a>
+<code>TATACAP</code> <a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.TAJGVK.html">TAJGVK</a>
+<code>SPELS</code> <a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.TATAMOTORS.html">TATAMOTORS</a>
+<a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.BCG.html">BCG</a>
+<a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.NSIL.html">NSIL</a></p>
+<p>The Tata Trust operates on two fronts: direct philanthropy through
+grants and relief, and strategic investment via Tata Sons in
+large‑scale, national‑importance projects. Historically, the group
+pioneered India’s first steel plant, hydroelectric plant, luxury hotel,
+textile mill, and truck manufacturer, and now is launching its inaugural
+semiconductor venture, EV‑battery plant, and major phone‑assembly
+facility. While these projects have longer gestation periods and higher
+risk, the aim is to incubate them into thriving public companies. The
+group’s “gold‑standard” governance and ethics remain constant, but the
+focus now is on disciplined execution and effective capital allocation
+to ensure these ambitious, nation‑building initiatives succeed</p>
+<p><em>NDTV: <a href="https://youtu.be/77frYBVJLnk"
+class="uri">https://youtu.be/77frYBVJLnk</a> 12:00 (353s) </em></p>
+</div>
+<div
+id="personal-lives-corporate-risks-and-national-security-the-nvidia-ceo-controversy"
+class="section level2">
+<h2>Personal Lives, Corporate Risks, and National Security: The Nvidia
+CEO Controversy</h2>
+<p>The broadcast “Closing Argument” examines how Jensen Huang’s alleged
+infidelity and possible ties to a Chinese executive raise concerns
+beyond personal scandal, touching on corporate governance, shareholder
+impact, and U.S. national security. Legal experts discuss the relevance
+of California community‑property law to a potential divorce, board
+fiduciary duties, contractual restrictions on executive conduct, and the
+possibility of a “honeypot” foreign‑influence scenario. They highlight
+the board’s need to assess risk, enforce compliance, consider removal or
+suspension of the CEO, and protect Nvidia’s strategic AI and
+semiconductor assets amid heightened US‑China tensions</p>
+<p><em>NDTV: <a href="https://youtu.be/nkhRFxEhScg"
+class="uri">https://youtu.be/nkhRFxEhScg</a> 12:00 (1278s) </em></p>
+</div>
+<div id="jensen-huangs-alleged-office-outbursts" class="section level2">
+<h2>Jensen Huang’s Alleged Office Outbursts</h2>
+<p>A New York Post report claims that former Nvidia CEO Jensen Huang
+verbally attacked senior executive Jay Puri in February 2025, wishing
+him illness and death in front of over 30 staff. The article cites
+additional incidents, including throwing a water bottle at a top
+executive, kicking another out of a meeting, and harsh public criticism
+of employees. Sources describe a culture of fear under Huang’s
+direct‑report structure, where more than 60 executives answered directly
+to him. The piece also mentions unrelated rumors about Huang’s personal
+life, noting they remain unproven</p>
+<p><em><a
+href="https://www.livemint.com/companies/people/i-hope-you-die-what-ex-nvidia-ceo-jensen-huang-told-senior-exec-jay-puri-a-look-at-his-temper-tantrums-11794727765102.html">livemint.com</a>
+12:00</em></p>
+</div>
+<div id="tata-steel-aims-to-finalize-ninl-merger-this-fiscal-year"
+class="section level2">
+<h2>Tata Steel aims to finalize NINL merger this fiscal year</h2>
+<p><a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.TATASTEEL.html">TATASTEEL</a></p>
+<p>Tata Steel’s CFO Koushik Chatterjee says the amalgamation of
+Neelachal Ispat Nigam Ltd (NINL), acquired for ₹12,100 crore, is on
+track for completion within the current financial year, pending NCLT
+approval later this month. The merger will enable a proposed
+₹40,000 crore expansion to add about 5 million tonnes of capacity to the
+1 MTPA plant near Kalinganagar, complementing the company’s broader
+growth plans</p>
+<p><em><a
+href="https://www.thehindubusinessline.com/companies/tata-steel-targets-ninl-amalgamation-completion-by-fiscal-end-cfo/article71704133.ece">thehindubusinessline.com</a>
+12:00</em></p>
+</div>
+<div
+id="heart-health-diagnosis-treatment-options-and-prevention-strategies"
+class="section level2">
+<h2>Heart Health: Diagnosis, Treatment Options, and Prevention
+Strategies</h2>
+<p><code>DRAGARWQ</code></p>
+<p>Dr. Amit Bhushan Sharma discusses how to assess coronary blockages
+using IVUS, FFR, and OCT to decide between medical therapy, angioplasty,
+or bypass surgery, emphasizing the importance of symptoms (classical
+angina vs. atypical equivalents in diabetics, women, and the elderly).
+He highlights key preventive “four numbers” – resting pulse (60‑70 bpm),
+blood pressure (&lt;120/80 mm Hg), fasting glucose, and walking/running
+distance – and advises lifestyle measures: balanced diet, increased
+vegetable and protein portions, avoidance of late‑day simple carbs,
+regular strength and aerobic exercise, and monitoring lipids and HbA1c.
+Advances such as TAVR for valve disease and leadless pacemakers are
+explained, noting their growing affordability and reduced invasiveness.
+The overall message stresses early detection, informed decision‑making,
+and proactive heart‑healthy habits to prevent a first heart attack</p>
+<p><em>NDTV: <a href="https://youtu.be/DRKGV37MRck"
+class="uri">https://youtu.be/DRKGV37MRck</a> 11:04 (1417s) </em></p>
+</div>
+<div
+id="ongc-takes-over-cambay-block-vedanta-books-rs-379-cr-impairment"
+class="section level2">
+<h2>ONGC Takes Over Cambay Block; Vedanta Books Rs 379 Cr
+Impairment</h2>
+<p><a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.ONGC.html">ONGC</a>
+<code>VOGL</code></p>
+<p>ONGC has assumed control of the Cambay offshore block (CB‑OS‑02)
+after a Delhi High Court single‑judge order on July 22, 2026 dismissed
+Vedanta’s challenge to the government’s refusal to extend the
+production‑sharing contract. The block, previously operated by Vedanta
+(40% stake) with ONGC (50%) and Invenire Petrodyne (10%), saw its
+contract expire on June 29, 2023. Following the takeover, ONGC applied
+for a petroleum lease and will meet de‑commissioning liabilities from a
+site‑restoration fund, while bearing future operational liabilities.
+Vedanta, having ceased recognizing revenue from the block, recorded an
+impairment of about Rs 379 crore in Q1 FY27 due to the lack of a valid
+PSC and uncertainty over asset recoverability. The company has appealed
+the single‑judge decision before a division bench; hearings have
+concluded and judgment is reserved. Both firms note that the final
+litigation outcome and its financial impact remain uncertain</p>
+<p><em><a
+href="https://www.thehindubusinessline.com/companies/ongc-takes-charge-of-cambay-block-as-vedanta-records-379-crore-impairment/article71704266.ece">thehindubusinessline.com</a>
+11:04</em></p>
+</div>
+<div
+id="noel-tata-on-steering-tata-trusts-toward-impactdriven-institutional-growth"
+class="section level2">
+<h2>Noel Tata on Steering Tata Trusts Toward Impact‑Driven Institutional
+Growth</h2>
+<p><a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.KOVAI.html">KOVAI</a>
+<a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.BCG.html">BCG</a>
+<a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.NSIL.html">NSIL</a>
+<code>TATACAP</code></p>
+<p>Noel Tata recounts the humility and challenges of taking over Tata
+Trusts, shifting focus from mere expenditure to measurable social
+impact. He revisited the founders’ vision of building institutions,
+providing relief, and advancing learning, prompting initiatives that
+combine nutrition, water harvesting, and agriculture, boost women’s
+employment, and plan 40‑50 not‑for‑profit hospitals in underserved rural
+areas. Citing past successes like the Tata Medical Center’s residential
+care model and digital empowerment programs for women, he outlines a
+future centered on institutional building and expanded healthcare access
+for the poorest communities</p>
+<p><em>NDTV: <a href="https://youtu.be/iyx5xnxaSBE"
+class="uri">https://youtu.be/iyx5xnxaSBE</a> 11:00 (414s) </em></p>
+</div>
+<div id="dealerled-revamp-of-ola-electrics-sales-strategy"
+class="section level2">
+<h2>Dealer‑Led Revamp of Ola Electric’s Sales Strategy</h2>
+<p><a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.OLAELEC.html">OLAELEC</a></p>
+<p>Ola Electric is shutting down its company‑owned outlets and moving to
+an independent dealer model, aiming to cut operating costs and improve
+cash flow. Registrations fell 19.5% YoY to 41,653 units in Q3 FY27, and
+the company blames production and supplier delays rather than demand. It
+plans to expand dealer stores to 700 by March 2027, expects monthly
+output of 25,000 scooters by December, and targets free cash flow soon,
+though the effectiveness of the dealer shift in reversing sales decline
+remains uncertain</p>
+<p><em><a
+href="https://www.livemint.com/companies/ola-electric-founder-bhavish-aggarwal-has-a-new-plan-to-sell-e-scooters-shut-down-company-owned-outlets-and-11794724920505.html">livemint.com</a>
+11:00</em></p>
+</div>
+<div id="spacexs-historic-starship-landing-captured-live"
+class="section level2">
+<h2>SpaceX’s Historic Starship Landing Captured Live</h2>
+<p><a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.MOTILALOFS.html">MOTILALOFS</a>
+<a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.TVVISION.html">TVVISION</a></p>
+<p>Viewers watch as SpaceX successfully catches a returning Starship
+with giant mechanical arms, echoing a previously seen video and sparking
+crowd excitement. The broadcast intersperses this moment with a CNBC
+TV 18 promotion encouraging viewers to follow their platforms for market
+insights</p>
+<p><em>CNBC-TV18: <a href="https://youtu.be/xFOrlvxVpiQ"
+class="uri">https://youtu.be/xFOrlvxVpiQ</a> 10:54 (233s) </em></p>
+</div>
+<div
+id="mothersons-indiafocused-expansion-leverages-global-tech-amid-auto-sector-shift"
+class="section level2">
+<h2>Motherson’s India‑focused expansion leverages global tech amid auto
+sector shift</h2>
+<p><a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.MOTHERSON.html">MOTHERSON</a></p>
+<p>Samvardhana Motherson International (SAMIL) aims to tap India’s
+growing auto market by bringing globally acquired technologies to meet
+higher product standards and stricter emission norms. The group targets
+$108 bn gross revenue by FY 2029‑30, backed by a strong balance sheet,
+robust order book, and a mix of organic growth and acquisitions driven
+by customer needs. It plans to diversify across segments, geographies,
+and new verticals, increase content per vehicle, and use its 3CX10
+strategy to mitigate market fluctuations. Contractual pricing in its
+wiring‑harness business shields profitability from rising copper
+costs</p>
+<p><em><a
+href="https://www.thehindubusinessline.com/companies/motherson-eyes-bigger-india-play-with-global-technologies-amid-auto-sector-shift/article71704177.ece">thehindubusinessline.com</a>
+10:54</em></p>
+</div>
+<div id="aprilia-sxr-gt-175-a-versatile-italianstyled-maxiscooter"
+class="section level2">
+<h2>Aprilia SXR GT 175: A Versatile, Italian‑Styled Maxi‑Scooter</h2>
+<p><a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.HEROMOTOCO.html">HEROMOTOCO</a></p>
+<p>The new SXR GT 175 upgrades the SXR 160 with a 174.7 cc air‑cooled
+engine (same as the SR175) delivering ~13 PS and 14 Nm. It features a
+larger 14‑inch wheel setup, a more substantial chassis, comfortable
+seating, a TFT dash, front disc brake and rear drum, and sportier
+suspension. Performance is lively at 70‑80 km/h with decent low‑speed
+acceleration, but top speed caps around 90‑100 km/h, lagging behind
+liquid‑cooled rivals. Overall, the scooter offers a classy Italian look,
+improved comfort over the SR175, and good city‑riding dynamics for its
+₹31,000 price, making it a solid daily‑use option</p>
+<p><em>CNBC-TV18: <a href="https://youtu.be/L7U_drgUQOM"
+class="uri">https://youtu.be/L7U_drgUQOM</a> 09:30 (321s) </em></p>
+</div>
+<div id="eternal-revises-2030-allev-delivery-goal-amid-rapid-expansion"
+class="section level2">
+<h2>Eternal Revises 2030 All‑EV Delivery Goal Amid Rapid Expansion</h2>
+<p><code>ZOMATO</code> <a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.ETERNAL.html">ETERNAL</a></p>
+<p>Zomato‑Blinkit parent Eternal is re‑evaluating its 2030 target of a
+fully electric delivery fleet as its rider base has surged from 1.5 
+lakh to 12  lakh and its logistics needs now include trucks and other
+four‑wheelers. Chief Sustainability Officer Anjalli Ravi Kumar says a
+new timeline—potentially 2035—will depend on EV availability, government
+policies, and the ability to provide affordable EV access across 900
+cities. The company already outpaces the Indian two‑wheeler market with
+12‑13 % EV usage among partners, supported by equal‑pay for EV riders,
+rental options, and the EV Bazaar platform. Eternal also pushes
+sustainable packaging through PackSwitch and its Hyperpure business,
+selling 3,000 t of eco‑friendly packaging to 50,000 restaurants and
+awarding low‑plastic tags to over 10,000 eateries</p>
+<p><em><a
+href="https://www.thehindubusinessline.com/companies/zomato-parent-eternal-reassesses-2030-ev-delivery-target-as-fleet-expands-and-adoption-evolves/article71704178.ece">thehindubusinessline.com</a>
+09:30</em></p>
+</div>
+<div
+id="himalayan-750-review-bigger-engine-more-tech-still-adventureready"
+class="section level2">
+<h2>Himalayan 750 Review: Bigger Engine, More Tech, Still
+Adventure‑Ready</h2>
+<p><a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.ROHLTD.html">ROHLTD</a>
+<a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.HYUNDAI.html">HYUNDAI</a>
+<a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.MUNJALSHOW.html">MUNJALSHOW</a></p>
+<p>The Overdrive test ride in Sicily shows the new Royal Enfield
+Himalayan 750 delivers a 743 cc parallel‑twin with 55 PS and strong
+low‑rpm torque, twin front discs, advanced electronics (ride‑by‑wire,
+traction control, cornering ABS, cruise, five modes) and fully
+adjustable Showa suspension. At 223 kg it’s 27 kg heavier than the 450,
+with reduced wheel travel and ground clearance, but the torque‑rich
+engine, comfortable ergonomics, low seat options and confidence‑boosting
+brakes make it feel manageable on road and mild off‑road. Overall, it
+offers effortless touring and a logical upgrade for existing Himalayan
+owners, balancing added weight with improved performance and
+convenience</p>
+<p><em>CNBC-TV18: <a href="https://youtu.be/D1VyaRNJL8s"
+class="uri">https://youtu.be/D1VyaRNJL8s</a> 08:30 (542s) </em></p>
+</div>
+<div
+id="escorts-kubota-to-build-60000tractor-plant-in-up-aiming-for-expansion-and-diversified-growth"
+class="section level2">
+<h2>Escorts Kubota to Build 60,000‑Tractor Plant in UP, Aiming for
+Expansion and Diversified Growth</h2>
+<p><a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.ESCORTS.html">ESCORTS</a></p>
+<p>Escorts Kubota will start constructing a greenfield tractor facility
+near Jewar airport in Uttar Pradesh next fiscal year, with an initial
+60,000‑tractor capacity (scalable to 100,000) slated for completion in
+2‑2.5 years. The move follows strong performance in non‑tractor
+lines—construction equipment (+53% Q3), harvesters/transplanters (20‑30%
+growth), and engine business (double‑digit). Tractor demand faces
+short‑term pressure from uneven monsoons, El Niño and high input costs,
+but recovery is expected from Q2 FY 2027, with margins normalising by
+FY 2028. The expansion aims to boost overall capacity and capture future
+growth opportunities</p>
+<p><em><a
+href="https://www.thehindubusinessline.com/companies/escorts-kubota-to-set-up-new-up-plant-with-60000-tractor-capacity/article71704181.ece">thehindubusinessline.com</a>
+08:30</em></p>
+</div>
+<div id="thomas-kurian-indianborn-tech-leader-eyed-for-nvidia-ceo-role"
+class="section level2">
+<h2>Thomas Kurian: Indian‑born tech leader eyed for Nvidia CEO role</h2>
+<p><a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.CHEVIOT.html">CHEVIOT</a>
+<a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.OFSS.html">OFSS</a>
+<a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.MCLOUD.html">MCLOUD</a></p>
+<p>Thomas Kurian, born in Kerala in 1966 and educated at IIT Madras,
+Princeton (EE), and Stanford (MBA), spent 22 years at Oracle rising to
+president of product development before joining Google Cloud as CEO in
+2018. Amid Nvidia’s CEO search after Jensen Huang’s departure, Kurian is
+among candidates considered for the permanent role, alongside interim
+CEO CFO Colette Kress. His twin brother George heads NetApp. A petition
+to reinstate Huang has gathered over 132,000 signatures</p>
+<p><em><a
+href="https://www.livemint.com/companies/people/who-is-thomas-kurian-meet-the-india-born-tech-executive-leading-google-cloud-considered-for-nvidia-ceo-s-job-11794721588970.html">livemint.com</a>
+</em></p>
+</div>
+<div
+id="thomas-cook-india-targets-october-2027-for-resorts-business-demerger-eyes-acquisitions"
+class="section level2">
+<h2>Thomas Cook India targets October 2027 for resorts business
+demerger; eyes acquisitions</h2>
+<p><a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.THOMASCOOK.html">THOMASCOOK</a>
+<a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.STERTOOLS.html">STERTOOLS</a></p>
+<p>Thomas Cook (India) Ltd plans to complete the demerger of its resorts
+and resort‑management arm into Sterling Holiday Resorts by mid‑FY28
+(around October 2027), pending NCLT, regulatory and shareholder
+approvals. The board approved the split and a capital restructuring in
+March. CEO Mahesh Iyer said the company remains open to strategic
+partnerships and acquisitions, especially in technology‑led platforms,
+to boost its leisure, corporate travel and forex businesses. Recent
+travel demand has recovered, with Q2 FY27 revenues just 6% below last
+year and EBIT margins at 3.8%, driven by domestic and short‑haul travel.
+Forward bookings for Q3 FY27 show a 30% rise, indicating continued
+momentum despite higher airfares and costs</p>
+<p><em><a
+href="https://www.thehindubusinessline.com/companies/thomas-cook-india-targets-october-2027-for-resorts-business-demerger-eyes-acquisitions/article71704173.ece">thehindubusinessline.com</a>
+</em></p>
+</div>
+<div
+id="booking.com-targets-longterm-growth-in-india-through-expanded-partner-ecosystem-and-alternative-stays"
+class="section level2">
+<h2>Booking.com targets long‑term growth in India through expanded
+partner ecosystem and alternative stays</h2>
+<p>Booking.com’s South Asia Regional Manager Santosh Kumar said the firm
+will drive growth by strengthening relationships with accommodation
+partners, deepening inventory across price points, and investing in
+technology to simplify discovery and booking. The strategy emphasizes
+alternative accommodations—homestays, villas, guesthouses—as these are
+increasingly popular, with 94% of surveyed travelers considering them on
+recent leisure trips. Kumar also highlighted the need for better
+infrastructure, marketing, and streamlined travel processes to unlock
+India’s inbound tourism potential. The company’s latest “How India
+Travels 2026 – The Homes Edit” report, compiled with VIDEC Consultants,
+surveyed over 2,300 travelers and 1,100 property owners to inform these
+initiatives</p>
+<p><em><a
+href="https://www.thehindubusinessline.com/companies/bookingcom-eyes-long-term-india-growth-through-technology-and-partner-ecosystem/article71704150.ece">thehindubusinessline.com</a>
+</em></p>
+</div>
+<div
+id="allahabad-high-court-bars-forceful-vehicle-repossession-by-finance-firms"
+class="section level2">
+<h2>Allahabad High Court Bars Forceful Vehicle Repossession by Finance
+Firms</h2>
+<p><code>JPASSOCIAT</code> <code>HDBFS</code></p>
+<p>The court ruled that a finance company’s right to repossess a
+financed vehicle must be exercised through legal forums—not by goons or
+armed agents. In a case where a borrower’s truck was seized at gunpoint
+after paying 31 of 45 installments, the bench ordered the vehicle’s
+immediate return, imposed a ₹10,000 cost, and directed the lender to
+restructure the loan without penal interest, leaving any default issue
+for adjudication by a competent authority. The judgment warned that
+allowing contractual repossession clauses to be enforced by force would
+effectively arm private parties with state coercive power</p>
+<p><em><a
+href="https://www.thehindubusinessline.com/companies/finance-firm-cant-use-goons-to-seize-vehicle-over-loan-default-hc/article71704083.ece">thehindubusinessline.com</a>
+</em></p>
+</div>
+<div
+id="investors-and-elon-musk-urge-nvidia-board-to-keep-jensen-huangs-return-on-the-table"
+class="section level2">
+<h2>Investors and Elon Musk Urge Nvidia Board to Keep Jensen Huang’s
+Return on the Table</h2>
+<p><a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.5PAISA.html">5PAISA</a>
+<a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.NUVAMA.html">NUVAMA</a></p>
+<p>Altimeter Capital’s Brad Gerstner and Atreides Management’s Gavin
+Baker have written to Nvidia’s board urging a slow, deliberate CEO
+succession process that leaves open the possibility of co‑founder
+Jensen Huang’s return after his abrupt resignation amid personal scandal
+allegations. They cite Huang’s historic leadership and the risk that key
+supply‑chain deals—many based on his personal relationships—could be
+lost without him, a view echoed by Elon Musk. While supporting interim
+CEO Colette Kress, the investors argue against rushing a replacement and
+stress the need to consider all options, including reinstating Huang</p>
+<p><em><a
+href="https://www.livemint.com/companies/news/investors-urge-board-to-consider-return-of-jensen-huang-musk-says-nvidia-will-lose-critical-deals-without-its-founder-11794708086815.html">livemint.com</a>
+</em></p>
+</div>
+<div id="spacex-achieves-first-midair-capture-of-starship"
+class="section level2">
+<h2>SpaceX Achieves First Midair Capture of Starship</h2>
+<p>SpaceX successfully performed the world’s first midair “catch” of its
+Starship spacecraft after it completed a 22‑hour, 14‑orbit mission
+delivering 26 Starlink satellites. The 171‑foot vehicle re‑entered,
+flipped vertical, and was snagged by the tower’s “Mechazilla” arms,
+demonstrating a crucial step toward fully reusable, airplane‑like launch
+systems. Although the first‑stage booster failed and fell into the Gulf,
+the Starship catch marks a major milestone in precision landing and
+reusability technology</p>
+<p><em><a
+href="https://www.livemint.com/companies/news/holy-grail-of-spaceflight-spacex-pulls-off-first-ever-midair-catch-of-starship-returning-from-orbit-11794704126187.html">livemint.com</a>
+</em></p>
+</div>
+<div id="jpmorgans-card-chief-allison-beer-departs-for-new-opportunity"
+class="section level2">
+<h2>JPMorgan’s Card Chief Allison Beer Departs for New Opportunity</h2>
+<p><code>TCNSBRANDS</code> <a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.BCG.html">BCG</a>
+<a
+href="https://stockviz.github.io/reports02/eq-in/risk/in.TCIEXP.html">TCIEXP</a></p>
+<p>Allison Beer, who has led JPMorgan’s credit‑card division since 2017
+and helped grow the business through competitive products and a new
+partnership with Apple, is leaving the bank for an external role.
+Co‑President Troy Rohrbaugh announced her exit and said a successor will
+be named in the coming weeks. Beer’s tenure saw strong card‑service and
+auto‑finance revenue growth, and she was highlighted by CEO Jamie Dimon
+for her ability to drive marketing spend with solid ROI. The bank now
+faces the task of appointing a new leader to continue expanding its card
+franchise</p>
+<p><em><a
+href="https://www.livemint.com/companies/jpmorgan-loses-card-chief-allison-beer-to-external-opportunity-11794685827439.html">livemint.com</a>
+</em></p>
+</div>
+
+&nbsp;
+&nbsp;
+<hr />
+<p style="text-align: center;">Copyright &copy; 2023 SAS Data Analytics Pvt. Ltd. All rights reserved.</p>
+<p style="text-align: center;"><a href="https://github.com/stockviz/reports/issues">&#x1F41E;</a></p>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
